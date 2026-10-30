@@ -170,7 +170,22 @@
     </div>
 
   </section>
+<div id="historyModal" class="hidden"
+     style="position:fixed;inset:0;background:#0009;
+     z-index:9999;padding:20px;overflow:auto;">
 
+  <div style="background:white;padding:25px;border-radius:12px;
+       max-width:800px;margin:40px auto;">
+
+    <button onclick="closeHistory()" style="float:right">
+      Close
+    </button>
+
+    <h2>Customer Submission History</h2>
+    <div id="historyContent">Loading...</div>
+
+  </div>
+</div>
 </main>
 
 <script>
@@ -307,7 +322,11 @@
         <tr>
           <td>${escapeHTML(new Date(item.created_at).toLocaleString())}</td>
           <td>${escapeHTML(item.client_type)}</td>
-          <td>${escapeHTML(item.name)}</td>
+          <td>
+  <button onclick="viewCustomerHistory('${escapeHTML(item.mobile)}')">
+    ${escapeHTML(item.name)}
+  </button>
+</td>
           <td>${escapeHTML(item.mobile)}</td>
           <td>${escapeHTML(item.pan)}</td>
           <td>${escapeHTML(item.service)}</td>
@@ -377,7 +396,62 @@
 
   alert("Customer status updated successfully!");
 }
+async function viewCustomerHistory(mobile) {
+  const modal = document.getElementById("historyModal");
+  const content = document.getElementById("historyContent");
 
+  modal.classList.remove("hidden");
+  content.textContent = "Loading customer history...";
+
+  const { data, error } = await db
+    .from("client_submissions")
+    .select("*")
+    .eq("mobile", mobile)
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    content.textContent = "Could not load history: " + error.message;
+    return;
+  }
+
+  if (!data || data.length === 0) {
+    content.textContent = "No previous submissions found.";
+    return;
+  }
+
+  content.innerHTML = data.map(item => {
+    const files = Array.isArray(item.file_paths)
+      ? item.file_paths
+      : [];
+
+    return `
+      <div style="border:1px solid #ddd;padding:15px;
+                  margin:12px 0;border-radius:8px;">
+
+        <h3>${escapeHTML(item.service)}</h3>
+
+        <p><b>Date:</b>
+          ${escapeHTML(new Date(item.created_at).toLocaleString())}
+        </p>
+
+        <p><b>Status:</b> ${escapeHTML(item.status)}</p>
+
+        <p><b>Documents:</b></p>
+
+        ${files.map((path, index) => `
+          <button onclick="downloadDocument('${encodeURIComponent(path)}')">
+            Download ${index + 1}
+          </button>
+        `).join(" ") || "No documents"}
+
+      </div>
+    `;
+  }).join("");
+}
+
+function closeHistory() {
+  document.getElementById("historyModal").classList.add("hidden");
+}
   async function initialize() {
     const { data } = await db.auth.getSession();
 
