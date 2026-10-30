@@ -19,7 +19,35 @@ if (config.email && !config.email.includes("YOUR_EMAIL")) {
   emailLink.href = `mailto:${config.email}`;
 }
 
+
 document.getElementById("contactForm").addEventListener("submit", (event) => {
+  event.preventDefault();
+
+  const data = new FormData(event.currentTarget);
+  const name = String(data.get("name") || "").trim();
+  const phone = String(data.get("phone") || "").trim();
+  const service = String(data.get("service") || "").trim();
+  const message = String(data.get("message") || "").trim();
+
+  const enquiry =
+    `Hello TAXPERTIZE! I have a new enquiry.\n\n` +
+    `Name: ${name}\n` +
+    `Mobile: ${phone}\n` +
+    `Service: ${service}\n` +
+    `Message: ${message}`;
+
+  const whatsappURL =
+    "https://wa.me/918019621852?text=" +
+    encodeURIComponent(enquiry);
+
+  window.open(whatsappURL, "_blank");
+
+  document.getElementById("formNote").textContent =
+    "Thank You for Choosing TAXPERTIZE! Your enquiry is ready on WhatsApp. Please tap Send. Our team will review your request and get back to you shortly.";
+
+  event.currentTarget.reset();
+});
+("submit", (event) => {
   event.preventDefault();
   const data = new FormData(event.currentTarget);
   const name = String(data.get("name") || "").trim();
