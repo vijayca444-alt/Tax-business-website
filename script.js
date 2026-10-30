@@ -41,8 +41,10 @@ if (emailLink && config.email && !config.email.includes("YOUR_EMAIL")) {
 // ==========================================
 
 // ==========================================
-// CUSTOMER ENQUIRY FORM - EMAIL ONLY
-// ==========================================
+
+ // ==========================================
+ // CUSTOMER ENQUIRY FORM - WEB3FORMS
+ // ==========================================
 
 const contactForm = document.getElementById("contactForm");
 
@@ -53,49 +55,44 @@ if (contactForm) {
     const form = event.currentTarget;
     const note = document.getElementById("formNote");
     const button = form.querySelector('button[type="submit"]');
-    const data = new FormData(form);
 
     button.disabled = true;
     note.textContent = "Submitting your enquiry...";
 
-    try {
-      const enquiry = {
-        name: data.get("name"),
-        mobile: data.get("phone"),
-        service: data.get("service"),
-        message: data.get("message"),
-        _subject: "New TAXPERTIZE Website Enquiry",
-        _template: "table"
-      };
+    const formData = new FormData(form);
 
+    formData.append(
+      "access_key",
+      "50ff9d04-00dc-45cb-9dbe-2650248c42e6"
+    );
+
+    formData.append("subject", "New TAXPERTIZE Website Enquiry");
+
+    try {
       const response = await fetch(
-        "https://formsubmit.co/ajax/vijay.edukula@gmail.com",
+        "https://api.web3forms.com/submit",
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json"
-          },
-          body: JSON.stringify(enquiry)
+          body: formData
         }
       );
 
       const result = await response.json();
 
-      if (!response.ok || result.success !== true && result.success !== "true") {
-        throw new Error(result.message || "Email service rejected the enquiry");
+      if (result.success) {
+        form.reset();
+
+        note.textContent =
+          "Thank you for choosing TAXPERTIZE! Your enquiry has been received. Our team will review your requirements and get back to you shortly.";
+      } else {
+        throw new Error(result.message || "Submission failed");
       }
 
-      form.reset();
-
-      note.textContent =
-        "Thank you for choosing TAXPERTIZE! Your enquiry has been received. Our team will review your requirements and get back to you shortly.";
-
     } catch (error) {
-      console.error("TAXPERTIZE enquiry error:", error);
+      console.error("Enquiry error:", error);
 
       note.textContent =
-        "We couldn't submit your enquiry. Please try again later.";
+        "Sorry, we couldn't submit your enquiry. Please try again.";
 
     } finally {
       button.disabled = false;
