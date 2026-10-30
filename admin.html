@@ -311,7 +311,13 @@
           <td>${escapeHTML(item.mobile)}</td>
           <td>${escapeHTML(item.pan)}</td>
           <td>${escapeHTML(item.service)}</td>
-          <td>${escapeHTML(item.status)}</td>
+         <td>
+  <select onchange="updateStatus('${item.id}', this.value)">
+    <option value="Pending" ${item.status === "Pending" ? "selected" : ""}>Pending</option>
+    <option value="In Progress" ${item.status === "In Progress" ? "selected" : ""}>In Progress</option>
+    <option value="Completed" ${item.status === "Completed" ? "selected" : ""}>Completed</option>
+  </select>
+</td>
           <td>${downloads || "No documents"}</td>
         </tr>
       `;
@@ -353,6 +359,24 @@
 
   document.getElementById("serviceFilter")
     .addEventListener("change", renderRecords);
+  async function updateStatus(id, status) {
+  const allowed = ["Pending", "In Progress", "Completed"];
+
+  if (!allowed.includes(status)) return;
+
+  const { error } = await db
+    .from("client_submissions")
+    .update({ status })
+    .eq("id", id);
+
+  if (error) {
+    alert("Could not update status: " + error.message);
+    loadSubmissions();
+    return;
+  }
+
+  alert("Customer status updated successfully!");
+}
 
   async function initialize() {
     const { data } = await db.auth.getSession();
