@@ -132,6 +132,25 @@
     <div class="panel">
       <h2>Customer Submissions</h2>
       <p class="stats" id="totalCount">Total submissions: 0</p>
+      <div class="filters">
+  <select id="statusFilter">
+    <option value="">All Statuses</option>
+    <option value="Pending">Pending</option>
+    <option value="In Progress">In Progress</option>
+    <option value="Completed">Completed</option>
+  </select>
+
+  <input type="date" id="fromDate">
+  <input type="date" id="toDate">
+</div>
+
+<div class="panel" style="background:#edf2f8">
+  <p id="customerCount">Unique Customers: 0</p>
+  <p id="incomeTaxCount">Income Tax: 0</p>
+  <p id="gstCount">GST: 0</p>
+  <p id="pendingCount">Pending: 0</p>
+  <p id="completedCount">Completed: 0</p>
+</div>
 
       <div class="filters">
         <input
@@ -282,6 +301,9 @@
       .value.trim().toLowerCase();
 
     const service = document.getElementById("serviceFilter").value;
+    const status = document.getElementById("statusFilter").value;
+const fromDate = document.getElementById("fromDate").value;
+const toDate = document.getElementById("toDate").value;
 
     const filtered = submissions.filter(item => {
       const matchesSearch = [
@@ -295,13 +317,38 @@
       const matchesService =
         !service || item.service === service;
 
-      return matchesSearch && matchesService;
+      const matchesStatus = !status || item.status === status;
+
+const date = item.created_at.slice(0, 10);
+const matchesFrom = !fromDate || date >= fromDate;
+const matchesTo = !toDate || date <= toDate;
+
+return matchesSearch && matchesService &&
+       matchesStatus && matchesFrom && matchesTo;
     });
 
     document.getElementById("totalCount").textContent =
       "Total submissions: " + submissions.length;
 
     const tbody = document.getElementById("records");
+    const uniqueCustomers = new Set(
+  submissions.map(item => item.mobile)
+).size;
+
+document.getElementById("customerCount").textContent =
+  "Unique Customers: " + uniqueCustomers;
+
+document.getElementById("incomeTaxCount").textContent =
+  "Income Tax: " + submissions.filter(x => x.service === "Income Tax").length;
+
+document.getElementById("gstCount").textContent =
+  "GST: " + submissions.filter(x => x.service === "GST").length;
+
+document.getElementById("pendingCount").textContent =
+  "Pending: " + submissions.filter(x => x.status === "Pending").length;
+
+document.getElementById("completedCount").textContent =
+  "Completed: " + submissions.filter(x => x.status === "Completed").length;
 
     tbody.innerHTML = filtered.map(item => {
       const paths = Array.isArray(item.file_paths)
@@ -378,6 +425,14 @@
 
   document.getElementById("serviceFilter")
     .addEventListener("change", renderRecords);
+  document.getElementById("statusFilter")
+  .addEventListener("change", renderRecords);
+
+document.getElementById("fromDate")
+  .addEventListener("change", renderRecords);
+
+document.getElementById("toDate")
+  .addEventListener("change", renderRecords);
   async function updateStatus(id, status) {
   const allowed = ["Pending", "In Progress", "Completed"];
 
