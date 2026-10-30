@@ -76,12 +76,25 @@
       <label for="pan">PAN Number</label>
       <input id="pan" name="pan" required maxlength="10" placeholder="ABCDE1234F" style="text-transform:uppercase">
 
-      <label for="service">Service Required</label>
-      <select id="service" name="service" required>
-        <option value="">Select service</option>
-        <option>Income Tax</option>
-        <option>GST</option>
-      </select>
+     <label for="service_type">Service Required</label>
+<select id="service_type" required>
+  <option value="">Select service</option>
+  <option value="Income Tax">Income Tax</option>
+  <option value="GST">GST</option>
+  <option value="Other">Other</option>
+</select>
+
+<input type="hidden" id="service" name="service">
+
+<div id="otherServiceContainer" style="display:none;">
+  <label for="other_service">Please specify your service requirement</label>
+  <input
+    type="text"
+    id="other_service"
+    placeholder="Type your service requirement"
+    maxlength="150"
+  >
+</div>
 
       <label for="files">Upload Documents</label>
       <input id="files" name="files" type="file" multiple required accept=".pdf,.jpg,.jpeg,.png,.doc,.docx,.xls,.xlsx">
@@ -99,6 +112,26 @@
     const form = document.getElementById("uploadForm");
     const button = document.getElementById("submitButton");
     const message = document.getElementById("message");
+    const serviceType = document.getElementById("service_type");
+const service = document.getElementById("service");
+const otherService = document.getElementById("other_service");
+const otherServiceContainer = document.getElementById("otherServiceContainer");
+
+serviceType.addEventListener("change", () => {
+  const isOther = serviceType.value === "Other";
+
+  otherServiceContainer.style.display = isOther ? "block" : "none";
+  otherService.required = isOther;
+
+  if (!isOther) {
+    otherService.value = "";
+  }
+});
+
+form.addEventListener("reset", () => {
+  otherServiceContainer.style.display = "none";
+  otherService.required = false;
+});
 
     form.addEventListener("submit", async (event) => {
       event.preventDefault();
@@ -112,7 +145,11 @@
         return;
       }
 
-      const data = new FormData(form);
+      service.value = serviceType.value === "Other"
+  ? otherService.value.trim()
+  : serviceType.value;
+
+const data = new FormData(form);
       data.append("turnstile_token", token);
 
       button.disabled = true;
