@@ -32,3 +32,6 @@ Edit the text in `index.html` and styles in `styles.css`. Do not publish until c
 
 ## Important
 This is a starter website, not legal or tax advice. Review service descriptions, business identity, contact information, privacy wording and any required professional disclosures before going live.
+
+
+Latest updates: WhatsApp chat and enquiry form connect to +91 80196 21852. The website process section now uses the TAXPERTIZE journey: Idea → Finance Guidance → Business Setup → Compliance → Growth.
