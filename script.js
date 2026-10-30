@@ -39,6 +39,8 @@ if (emailLink && config.email && !config.email.includes("YOUR_EMAIL")) {
 }
 
 // ==========================================
+
+// ==========================================
 // CUSTOMER ENQUIRY FORM - EMAIL ONLY
 // ==========================================
 
@@ -50,11 +52,22 @@ if (contactForm) {
 
     const form = event.currentTarget;
     const note = document.getElementById("formNote");
+    const button = form.querySelector('button[type="submit"]');
     const data = new FormData(form);
 
-    note.textContent = "Sending your enquiry...";
+    button.disabled = true;
+    note.textContent = "Submitting your enquiry...";
 
     try {
+      const enquiry = {
+        name: data.get("name"),
+        mobile: data.get("phone"),
+        service: data.get("service"),
+        message: data.get("message"),
+        _subject: "New TAXPERTIZE Website Enquiry",
+        _template: "table"
+      };
+
       const response = await fetch(
         "https://formsubmit.co/ajax/vijay.edukula@gmail.com",
         {
@@ -63,37 +76,33 @@ if (contactForm) {
             "Content-Type": "application/json",
             "Accept": "application/json"
           },
-          body: JSON.stringify({
-            name: data.get("name"),
-            mobile: data.get("phone"),
-            service: data.get("service"),
-            message: data.get("message"),
-            _subject: "New TAXPERTIZE Website Enquiry",
-            _template: "table"
-          })
+          body: JSON.stringify(enquiry)
         }
       );
 
       const result = await response.json();
 
-      if (
-        !response.ok ||
-        (result.success !== true && result.success !== "true")
-      ) {
-        throw new Error("Submission failed");
+      if (!response.ok || result.success !== true && result.success !== "true") {
+        throw new Error(result.message || "Email service rejected the enquiry");
       }
 
       form.reset();
 
       note.textContent =
-        "Thank You for Choosing TAXPERTIZE! Your enquiry has been received. Our team will review your requirements and get back to you shortly.";
+        "Thank you for choosing TAXPERTIZE! Your enquiry has been received. Our team will review your requirements and get back to you shortly.";
 
     } catch (error) {
+      console.error("TAXPERTIZE enquiry error:", error);
+
       note.textContent =
-        "Sorry, your enquiry could not be submitted. Please try again or contact TAXPERTIZE at +91 80196 21852.";
+        "We couldn't submit your enquiry. Please try again later.";
+
+    } finally {
+      button.disabled = false;
     }
   });
 }
+
 
 // ==========================================
 // TAXPERTIZE FIXED-ANSWER CHATBOT
