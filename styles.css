@@ -20,9 +20,84 @@
 .chat-quick-link{display:inline-block;border:1px solid #b9ddd1;background:#eaf7f2;color:#147d70;border-radius:18px;padding:7px 10px;font-size:10px;font-weight:700}
 
 
-/* TAXPERTIZE logo and assistant sound control */
-.brand-logo{display:block;width:clamp(210px,24vw,300px);height:auto;max-height:66px;object-fit:contain;object-position:left center}
-.chat-head-actions{display:flex;align-items:center;gap:10px}
-.chatbot-head .chat-sound{font-size:16px;width:32px;height:32px;border:1px solid #ffffff55;border-radius:50%;display:grid;place-items:center;background:#ffffff12}
-.chatbot-head .chat-sound:hover{background:#ffffff25}
-@media(max-width:520px){.brand-logo{width:205px;max-height:54px}}
+/* TAXPERTIZE corporate homepage refresh */
+:root{--tp-navy:#082d61;--tp-blue:#075bd8;--tp-sky:#eaf5ff;--tp-ink:#092b5c}
+body{color:var(--tp-ink);background:#fff}
+.site-header{height:82px;background:rgba(255,255,255,.98);box-shadow:0 2px 18px rgba(8,45,97,.06)}
+.brand{min-width:300px}
+.brand-logo{display:block;width:310px;max-width:100%;height:auto;object-fit:contain}
+.nav-links{gap:clamp(13px,2vw,30px);color:#092b5c;font-size:13px}
+.nav-links a:hover{color:#075bd8}
+.nav-links .nav-cta{background:#064eb4;border-radius:9px;padding:13px 20px;color:#fff}
+.hero{padding:0;background:linear-gradient(105deg,#f8fcff 0%,#e8f4ff 55%,#d8edff 100%);color:#092b5c}
+.hero:before{display:none}
+.hero-glow{display:none}
+.hero-grid{grid-template-columns:1.04fr .96fr;gap:20px;min-height:425px;padding-top:28px;padding-bottom:18px}
+.eyebrow{color:#0b3a82;letter-spacing:2.4px}
+.eyebrow-dot{background:#0866df;box-shadow:0 0 0 5px rgba(8,102,223,.12)}
+h1{font-size:clamp(42px,4.5vw,62px);line-height:1.04;color:#082b61;margin:20px 0 18px;letter-spacing:-2.4px}
+h1 span,h2 span{color:#0865d8}
+.hero-lead{color:#18385f;font-size:17px;line-height:1.6;max-width:550px}
+.button{border-radius:10px;font-size:14px;padding:15px 22px}
+.button-primary{background:linear-gradient(110deg,#064db5,#0879e7);color:#fff}
+.button-primary:hover{background:#06449d}
+.button-ghost{border:1.5px solid #075bd8;color:#092b5c}
+.button-ghost:hover{background:#e6f2ff;color:#075bd8}
+.hero-note{color:#426080;margin-top:25px}
+.note-line{background:#0871e6}
+.hero-photo-wrap{height:420px;display:flex;align-items:flex-end;justify-content:center;overflow:visible;position:relative}
+.hero-professional{height:100%;max-width:100%;width:auto;object-fit:contain;object-position:bottom center;position:relative;z-index:2;filter:drop-shadow(0 12px 22px rgba(10,53,104,.12))}
+.hero-service-pills{position:absolute;right:-4px;top:28px;z-index:3;display:grid;gap:10px}
+.hero-service-pills span{background:#fff;color:#0a397b;border:1px solid #d6eaff;border-radius:30px;padding:10px 15px;font-size:11px;font-weight:800;box-shadow:0 8px 24px rgba(9,63,125,.12)}
+.hero-bottom{display:none}
+.trust-strip{background:#f5faff;border-color:#e1efff}
+.trust-inner{color:#164276}
+.section-heading h2{font-size:clamp(32px,3.5vw,44px);color:#092b61}
+.dark-eyebrow{color:#075bd8}
+.image-service-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.image-service-card{padding:0;overflow:hidden;border:1px solid #e0edfb;border-radius:14px;background:#fff;box-shadow:0 8px 22px rgba(9,54,105,.08);transition:transform .2s,box-shadow .2s}
+.image-service-card:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(9,54,105,.14)}
+.image-service-card>img{width:100%;height:155px;display:block;object-fit:cover}
+.service-card-copy{padding:18px 19px 20px}
+.image-service-card h3{font-size:17px;color:#092b61;margin:0 0 8px}
+.image-service-card p{font-size:13px;line-height:1.55;color:#3d5674;min-height:40px;margin-bottom:12px}
+.image-service-card a{color:#075bd8;font-weight:800;font-size:12px}
+.service-card{border-color:#e0edfb}
+.service-card-dark{background:#092f67;color:#fff}
+.chatbot{position:fixed;right:22px;bottom:92px;width:min(420px,calc(100vw - 28px));z-index:1000;border:1px solid #d4e8ff;border-radius:20px;overflow:hidden;background:#fff;box-shadow:0 18px 55px rgba(4,42,94,.24)}
+.chatbot-head{background:linear-gradient(110deg,#075bd8,#062e72);color:#fff;padding:14px 16px;display:flex;align-items:center;gap:12px}
+.chatbot-brand{display:flex;align-items:center;gap:10px;flex:1;min-width:0}
+.chatbot-brand img{width:46px;height:46px;border-radius:50%;object-fit:cover;object-position:top center;border:2px solid #9ccfff;background:#fff}
+.chatbot-brand strong,.chatbot-brand small{display:block}
+.chatbot-brand strong{font-size:14px}
+.chatbot-brand small{font-size:11px;color:#d7eaff;margin-top:3px}
+.chatbot-head button{border:0;background:transparent;color:#fff;font-size:24px;cursor:pointer}
+.chatbot-head .chat-sound{font-size:16px;border:1px solid rgba(255,255,255,.4);border-radius:50%;width:36px;height:36px}
+.chatbot-messages{padding:16px;max-height:290px;overflow:auto;background:linear-gradient(#fff,#f1f8ff)}
+.bot-message{background:#fff;border:1px solid #dcecff;border-radius:14px;padding:15px;color:#092b61;line-height:1.55;font-size:13px;box-shadow:0 4px 12px rgba(8,45,97,.06)}
+.chat-quick{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:13px}
+.chat-quick button{border:1px solid #b8d7ff;background:#fff;color:#074aa8;border-radius:24px;padding:10px 9px;font-size:12px;font-weight:700;cursor:pointer}
+.chat-quick button:hover{background:#eaf4ff}
+.chatbot-input{display:flex;gap:8px;padding:12px 14px;background:#fff}
+.chatbot-input input{min-width:0;flex:1;border:1px solid #c9def5;border-radius:9px;padding:12px;font:inherit}
+.chatbot-input button{background:#075bd8;color:#fff;border:0;border-radius:9px;padding:0 18px;font-weight:700}
+.chatbot-note{margin:0;padding:0 15px 13px;font-size:10px;color:#6d8097;background:#fff}
+.chatbot-launch{position:fixed;right:24px;bottom:22px;z-index:999;background:#075bd8;color:#fff;border:0;border-radius:28px;padding:14px 20px;font-weight:800;box-shadow:0 8px 24px rgba(7,91,216,.28);cursor:pointer}
+.whatsapp-float{background:#07864b}
+@media(max-width:900px){
+ .brand{min-width:0}.brand-logo{width:235px}
+ .nav-links{gap:12px}
+ .hero-grid{grid-template-columns:1fr .8fr}
+ .hero-service-pills{display:none}
+ .image-service-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:680px){
+ .site-header{height:70px}.brand-logo{width:220px}
+ .hero-grid{grid-template-columns:1fr;gap:0;padding-top:34px}
+ .hero-photo-wrap{height:300px;margin-top:10px}
+ h1{font-size:42px}
+ .image-service-grid{grid-template-columns:1fr}
+ .image-service-card>img{height:190px}
+ .chatbot{right:10px;bottom:82px}
+ .chatbot-launch{right:14px;bottom:14px}
+}
