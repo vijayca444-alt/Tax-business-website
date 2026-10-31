@@ -126,9 +126,23 @@ function toggleChat(open) {
   }
 }
 
+let welcomeSoundPlayed = false;
+const welcomeChime = new Audio("sounds/welcome.wav");
+welcomeChime.preload = "auto";
+function playWelcomeChime() {
+  try {
+    welcomeChime.currentTime = 0;
+    const playback = welcomeChime.play();
+    if (playback && typeof playback.catch === "function") playback.catch(() => {});
+    welcomeSoundPlayed = true;
+  } catch (error) { /* Audio is optional if the browser blocks it. */ }
+}
+
 if (chatLaunch) {
   chatLaunch.addEventListener("click", () => {
-    toggleChat(chatPanel.hidden);
+    const opening = chatPanel.hidden;
+    toggleChat(opening);
+    if (opening) playWelcomeChime();
   });
 }
 
@@ -180,7 +194,7 @@ function getTaxpertizeAnswer(question) {
   }
 
   if (/contact|whatsapp|phone|call|talk/.test(q)) {
-    return "You can contact TAXPERTIZE on WhatsApp at +91 80196 21852 or call +91 81432 26229. Email: vijay.edukula@gmail.com.";
+    return "You can contact TAXPERTIZE on WhatsApp at +91 80196 21852 or call +91 80196 21852. Email: vijay.edukula@hotmail.com.";
   }
 
   if (/hello|hi|hey|good morning|good evening/.test(q)) {
@@ -235,42 +249,10 @@ document.querySelectorAll(".chat-quick button").forEach(button => {
   });
 });
 
-
-// Auto-open the TAXPERTIZE assistant on first page visit.
-// Browsers may block autoplay audio until a visitor interacts; the chat itself opens regardless.
+// Auto-open the assistant panel silently after page load.
+// Browsers block sound autoplay until the visitor interacts with the page.
 window.addEventListener("load", () => {
   if (chatPanel && chatLaunch) {
-    window.setTimeout(() => {
-      toggleChat(true);
-      try {
-        const AudioCtx = window.AudioContext || window.webkitAudioContext;
-        if (AudioCtx) {
-          const ctx = new AudioCtx();
-          if (ctx.state === "running") {
-            const osc = ctx.createOscillator();
-            const gain = ctx.createGain();
-            osc.type = "sine"; osc.frequency.value = 740;
-            gain.gain.setValueAtTime(0.0001, ctx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.045, ctx.currentTime + 0.03);
-            gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.22);
-            osc.connect(gain); gain.connect(ctx.destination);
-            osc.start(); osc.stop(ctx.currentTime + 0.23);
-          }
-        }
-      } catch(e) {}
-    }, 1400);
+    window.setTimeout(() => toggleChat(true), 1400);
   }
 });
-if (chatSound) {
-  chatSound.addEventListener("click", () => {
-    try {
-      const AudioCtx = window.AudioContext || window.webkitAudioContext;
-      if (!AudioCtx) return;
-      const ctx = new AudioCtx();
-      const osc = ctx.createOscillator(), gain = ctx.createGain();
-      osc.frequency.value = 740; gain.gain.value = 0.04;
-      osc.connect(gain); gain.connect(ctx.destination);
-      osc.start(); osc.stop(ctx.currentTime + 0.18);
-    } catch(e) {}
-  });
-}

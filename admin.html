@@ -110,7 +110,6 @@
         type="email"
         id="email"
         placeholder="Admin email"
-        value="vijay.edukula@gmail.com"
         required
       >
 
@@ -148,6 +147,7 @@
   <p id="customerCount">Unique Customers: 0</p>
   <p id="incomeTaxCount">Income Tax: 0</p>
   <p id="gstCount">GST: 0</p>
+  <p id="otherServicesCount">Other Services: 0</p>
   <p id="pendingCount">Pending: 0</p>
   <p id="completedCount">Completed: 0</p>
 </div>
@@ -163,6 +163,7 @@
           <option value="">All Services</option>
           <option value="Income Tax">Income Tax</option>
           <option value="GST">GST</option>
+          <option value="__OTHER__">Other Services</option>
         </select>
       </div>
 
@@ -314,8 +315,14 @@ const toDate = document.getElementById("toDate").value;
         String(value || "").toLowerCase().includes(search)
       );
 
+      const serviceName = String(item.service || "").trim().toLowerCase();
+      const isIncomeTax = serviceName.includes("income tax") || serviceName === "itr";
+      const isGST = serviceName === "gst" || serviceName.includes("gst ");
       const matchesService =
-        !service || item.service === service;
+        !service ||
+        (service === "Income Tax" && isIncomeTax) ||
+        (service === "GST" && isGST) ||
+        (service === "__OTHER__" && !isIncomeTax && !isGST);
 
       const matchesStatus = !status || item.status === status;
 
@@ -342,7 +349,18 @@ document.getElementById("incomeTaxCount").textContent =
   "Income Tax: " + submissions.filter(x => x.service === "Income Tax").length;
 
 document.getElementById("gstCount").textContent =
-  "GST: " + submissions.filter(x => x.service === "GST").length;
+  "GST: " + submissions.filter(x => {
+    const s = String(x.service || "").trim().toLowerCase();
+    return s === "gst" || s.includes("gst ");
+  }).length;
+
+document.getElementById("otherServicesCount").textContent =
+  "Other Services: " + submissions.filter(x => {
+    const s = String(x.service || "").trim().toLowerCase();
+    const isIncomeTax = s.includes("income tax") || s === "itr";
+    const isGST = s === "gst" || s.includes("gst ");
+    return s && !isIncomeTax && !isGST;
+  }).length;
 
 document.getElementById("pendingCount").textContent =
   "Pending: " + submissions.filter(x => x.status === "Pending").length;
