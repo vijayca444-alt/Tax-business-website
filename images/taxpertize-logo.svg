@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="150" viewBox="0 0 760 150">
+<g transform="translate(8 10)">
+<path d="M12 22 H130 V42 H84 V124 H58 V42 H12 Z" fill="#0757B8"/>
+<rect x="94" y="82" width="13" height="42" rx="2" fill="#0B6BCB"/>
+<rect x="112" y="64" width="13" height="60" rx="2" fill="#0B6BCB"/>
+<rect x="130" y="45" width="13" height="79" rx="2" fill="#0B6BCB"/>
+<path d="M88 95 L145 22" stroke="#F2A900" stroke-width="6" stroke-linecap="round"/>
+<path d="M132 23 L147 18 L144 34" fill="none" stroke="#F2A900" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M6 130 Q74 145 151 126" fill="none" stroke="#082E63" stroke-width="5" stroke-linecap="round"/>
+</g>
+<text x="180" y="77" font-family="Arial, Helvetica, sans-serif" font-size="58" font-weight="800" letter-spacing="-1" fill="#082E63">TAXPERTIZE</text>
+<text x="182" y="115" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="700" letter-spacing="1.4" fill="#082E63">TAX · ACCOUNTS · COMPLIANCE</text>
+</svg>
