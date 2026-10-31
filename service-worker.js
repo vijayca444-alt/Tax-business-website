@@ -1,4 +1,4 @@
-// TAXPERTIZE cache refresh: 2026-10-31
+// TAXPERTIZE cache refresh: 2026-v20261031b-31
 
 self.addEventListener("install", () => {
   self.skipWaiting();

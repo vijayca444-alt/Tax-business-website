@@ -180,3 +180,17 @@ h1 span,h2 span{color:#0865d8}
 .chatbot-brand{align-items:center;gap:10px;}
 .chatbot-brand img{width:78px;height:68px;flex:0 0 78px;object-fit:contain;object-position:center center;border-radius:6px;border:0;background:transparent;padding:0;}
 @media(max-width:520px){.chatbot-brand img{width:66px;height:62px;flex-basis:66px;}}
+
+
+/* Final image and chatbot layout fix (2026-10-31) */
+.hero-grid{grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);gap:28px;min-height:440px;align-items:center}
+.hero-photo-wrap{width:100%;height:auto;min-height:0;aspect-ratio:725/465;max-height:460px;overflow:visible;display:flex;align-items:center;justify-content:center;background:transparent;border-radius:14px}
+.hero-photo-wrap .hero-professional{display:block;width:100%;height:100%;max-width:100%;object-fit:contain;object-position:center center;border-radius:14px;filter:drop-shadow(0 12px 22px rgba(10,53,104,.12))}
+.chatbot{right:22px;bottom:88px;width:min(390px,calc(100vw - 28px));max-height:min(390px,calc(100vh - 115px));display:flex;flex-direction:column}
+.chatbot-head{flex:0 0 auto;padding:10px 14px}
+.chatbot-brand img{width:82px;height:72px;flex:0 0 82px;object-fit:contain;object-position:center center;border:0;border-radius:5px;background:transparent;padding:0}
+.chatbot-messages{max-height:150px;overflow-y:auto;flex:1 1 auto}
+.chatbot-input{flex:0 0 auto}
+.chatbot-note{flex:0 0 auto}
+@media(max-width:900px){.hero-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}.hero-photo-wrap{max-height:390px}}
+@media(max-width:680px){.hero-grid{grid-template-columns:1fr;gap:8px}.hero-photo-wrap{height:auto;aspect-ratio:725/465;max-height:none;margin-top:12px}.chatbot{right:10px;bottom:82px;max-height:min(380px,calc(100vh - 100px))}.chatbot-brand img{width:72px;height:64px;flex-basis:72px}}
