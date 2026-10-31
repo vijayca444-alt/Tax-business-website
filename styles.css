@@ -101,3 +101,31 @@ h1 span,h2 span{color:#0865d8}
  .chatbot{right:10px;bottom:82px}
  .chatbot-launch{right:14px;bottom:14px}
 }
+
+
+/* Final layout corrections: T logo, team hero, 11 core service photos, floating controls */
+.brand-logo{width:330px;height:auto;max-height:66px;object-fit:contain}
+.hero-photo-wrap{height:420px;overflow:hidden;align-items:stretch;justify-content:center;border-radius:0}
+.hero-photo-wrap .hero-professional{width:100%;height:100%;max-width:none;object-fit:cover;object-position:center 44%;filter:none}
+.hero-service-pills{display:none!important}
+.image-service-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.image-service-card{min-width:0}
+.image-service-card>img{display:block;width:100%;height:145px;object-fit:cover}
+.chatbot-launch{right:24px;bottom:96px;z-index:1001}
+.whatsapp-float{right:24px;bottom:22px;z-index:1000}
+.chatbot{right:24px;bottom:164px;z-index:1002}
+.chatbot-brand img{object-position:center top}
+@media(max-width:900px){
+ .brand-logo{width:250px;max-height:54px}
+ .image-service-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .hero-photo-wrap{height:330px}
+}
+@media(max-width:680px){
+ .brand-logo{width:205px;max-height:48px}
+ .image-service-grid{grid-template-columns:1fr}
+ .image-service-card>img{height:185px}
+ .hero-photo-wrap{height:270px}
+ .chatbot{right:10px;bottom:155px;width:calc(100vw - 20px)}
+ .chatbot-launch{right:14px;bottom:88px}
+ .whatsapp-float{right:14px;bottom:14px}
+}
