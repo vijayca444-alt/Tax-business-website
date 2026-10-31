@@ -152,3 +152,23 @@ h1 span,h2 span{color:#0865d8}
 .chatbot-head .chat-sound:hover{background:rgba(255,255,255,.25)}
 @media(max-width:900px){.footer-contact-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.footer-brand-link{grid-column:1/-1}.footer-brand-link img{width:220px}}
 @media(max-width:520px){.footer-contact-grid{grid-template-columns:1fr}.footer-bottom{flex-direction:column}.chatbot-brand img{width:62px;height:52px;flex-basis:62px}}
+
+
+/* Final polish: give the top navigation room and show the assistant portrait fully */
+.container{width:min(1320px,calc(100% - 40px))}
+.nav{gap:28px}
+.brand{flex:0 0 auto}
+.brand-logo{display:block;width:270px;max-width:23vw;height:auto;object-fit:contain}
+.nav-links{gap:clamp(14px,1.45vw,24px);font-size:13px;white-space:nowrap;flex:1;justify-content:flex-end}
+.nav-links a{white-space:nowrap}
+.chatbot-brand{display:flex;align-items:center;gap:10px;min-width:0}
+.chatbot-brand img{width:68px;height:54px;flex:0 0 68px;border-radius:8px;object-fit:contain;object-position:center;border:1px solid rgba(156,207,255,.65);background:#fff}
+@media(max-width:1050px){
+  .container{width:min(100% - 32px,900px)}
+  .brand-logo{width:220px;max-width:28vw}
+  .nav-links{gap:12px;font-size:12px}
+}
+@media(max-width:760px){
+  .brand-logo{width:210px;max-width:65vw}
+  .nav-links{white-space:normal}
+}
