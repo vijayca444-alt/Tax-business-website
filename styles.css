@@ -172,3 +172,11 @@ h1 span,h2 span{color:#0865d8}
   .brand-logo{width:210px;max-width:65vw}
   .nav-links{white-space:normal}
 }
+
+
+/* Final visibility fix: show the complete team photograph and full assistant portrait. */
+.hero-photo-wrap{overflow:hidden;background:linear-gradient(135deg,#eaf5ff,#d9edff);}
+.hero-photo-wrap .hero-professional{width:100%;height:100%;max-width:100%;object-fit:contain;object-position:center center;}
+.chatbot-brand{align-items:center;gap:10px;}
+.chatbot-brand img{width:78px;height:68px;flex:0 0 78px;object-fit:contain;object-position:center center;border-radius:6px;border:0;background:transparent;padding:0;}
+@media(max-width:520px){.chatbot-brand img{width:66px;height:62px;flex-basis:66px;}}
