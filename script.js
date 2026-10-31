@@ -112,16 +112,93 @@ const chatMessages = document.getElementById("chatMessages");
 const chatForm = document.getElementById("chatForm");
 const chatInput = document.getElementById("chatInput");
 
+let chatSoundEnabled = true;
+let chatAudioContext = null;
+let chatChimePending = false;
+
+function playChatChime() {
+  if (!chatSoundEnabled) return false;
+  try {
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContextClass) return false;
+    chatAudioContext = chatAudioContext || new AudioContextClass();
+    if (chatAudioContext.state === "suspended") {
+      chatAudioContext.resume().then(() => playChatChime()).catch(() => {});
+      return false;
+    }
+    const now = chatAudioContext.currentTime;
+    [660, 880].forEach((frequency, index) => {
+      const oscillator = chatAudioContext.createOscillator();
+      const gain = chatAudioContext.createGain();
+      oscillator.type = "sine";
+      oscillator.frequency.value = frequency;
+      gain.gain.setValueAtTime(0.0001, now + index * 0.11);
+      gain.gain.exponentialRampToValueAtTime(0.12, now + index * 0.11 + 0.025);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + index * 0.11 + 0.22);
+      oscillator.connect(gain);
+      gain.connect(chatAudioContext.destination);
+      oscillator.start(now + index * 0.11);
+      oscillator.stop(now + index * 0.11 + 0.24);
+    });
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
+
 function toggleChat(open) {
   if (!chatPanel || !chatLaunch) return;
 
+  const wasHidden = chatPanel.hidden;
   chatPanel.hidden = !open;
   chatLaunch.setAttribute("aria-expanded", String(open));
 
-  if (open && chatInput) {
-    chatInput.focus();
+  if (open && wasHidden) {
+    chatChimePending = true;
+    playChatChime();
   }
+  if (open && chatInput) chatInput.focus();
 }
+
+const chatSoundButton = document.getElementById("chatSound");
+if (chatSoundButton) {
+  chatSoundButton.addEventListener("click", async () => {
+    chatSoundEnabled = !chatSoundEnabled;
+    chatSoundButton.textContent = chatSoundEnabled ? "🔊" : "🔇";
+    chatSoundButton.setAttribute("aria-label", chatSoundEnabled ? "Mute chat sound" : "Enable chat sound");
+    chatSoundButton.title = chatSoundEnabled ? "Mute sound" : "Enable sound";
+    if (chatSoundEnabled) {
+      try {
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        if (AudioContextClass) {
+          chatAudioContext = chatAudioContext || new AudioContextClass();
+          await chatAudioContext.resume();
+          playChatChime();
+        }
+      } catch (error) { /* Browser may not support audio. */ }
+    }
+  });
+}
+
+// Browsers block sound that starts without a user gesture. Once the visitor
+// interacts with the page, resume audio and play the pending welcome chime.
+document.addEventListener("pointerdown", async () => {
+  if (!chatSoundEnabled || !chatChimePending) return;
+  chatChimePending = false;
+  try {
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if (AudioContextClass) {
+      chatAudioContext = chatAudioContext || new AudioContextClass();
+      await chatAudioContext.resume();
+      playChatChime();
+    }
+  } catch (error) { /* Sound remains optional if blocked. */ }
+});
+
+// Open the assistant automatically on each fresh website/app visit.
+window.addEventListener("load", () => {
+  window.setTimeout(() => toggleChat(true), 900);
+});
 
 if (chatLaunch) {
   chatLaunch.addEventListener("click", () => {

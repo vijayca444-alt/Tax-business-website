@@ -18,3 +18,11 @@
 .chatbot[hidden]{display:none}.chatbot-head{background:#102a40;color:#fff;padding:16px 18px;display:flex;justify-content:space-between;align-items:center}.chatbot-head strong,.chatbot-head small{display:block}.chatbot-head strong{font:700 14px Manrope}.chatbot-head small{font-size:10px;color:#9fc8bd;margin-top:4px}.chatbot-head button{background:none;border:0;color:#fff;font-size:25px;cursor:pointer}.chatbot-messages{padding:15px;overflow:auto;flex:1;background:#f7faf9}.bot-message,.user-message{max-width:90%;padding:11px 12px;border-radius:10px;font-size:12px;line-height:1.6;margin-bottom:10px;white-space:pre-wrap}.bot-message{background:#fff;border:1px solid #e5eeea;color:#294353}.user-message{background:#dff5ed;color:#173d38;margin-left:auto}.chat-quick{display:flex;flex-wrap:wrap;gap:7px;margin:8px 0 12px}.chat-quick button{border:1px solid #b9ddd1;background:#fff;color:#147d70;border-radius:18px;padding:7px 10px;font-size:10px;cursor:pointer}.chatbot-input{display:flex;gap:7px;padding:10px;border-top:1px solid #e6eeeb}.chatbot-input input{min-width:0;flex:1;border:1px solid #dce7e2;border-radius:7px;padding:10px;font:12px "DM Sans"}.chatbot-input button{border:0;border-radius:7px;background:#168b79;color:#fff;padding:0 14px;font-weight:700;cursor:pointer}.chatbot-note{font-size:9px;color:#87969b;text-align:center;margin:0;padding:0 10px 10px}
 @media(max-width:520px){.chatbot-launch{right:12px;bottom:72px}.chatbot{right:12px;bottom:126px}}
 .chat-quick-link{display:inline-block;border:1px solid #b9ddd1;background:#eaf7f2;color:#147d70;border-radius:18px;padding:7px 10px;font-size:10px;font-weight:700}
+
+
+/* TAXPERTIZE logo and assistant sound control */
+.brand-logo{display:block;width:clamp(210px,24vw,300px);height:auto;max-height:66px;object-fit:contain;object-position:left center}
+.chat-head-actions{display:flex;align-items:center;gap:10px}
+.chatbot-head .chat-sound{font-size:16px;width:32px;height:32px;border:1px solid #ffffff55;border-radius:50%;display:grid;place-items:center;background:#ffffff12}
+.chatbot-head .chat-sound:hover{background:#ffffff25}
+@media(max-width:520px){.brand-logo{width:205px;max-height:54px}}

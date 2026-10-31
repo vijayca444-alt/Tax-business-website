@@ -32,11 +32,7 @@
     <nav class="nav container" aria-label="Main navigation">
 
       <a class="brand" href="#home" aria-label="TAXPERTIZE home">
-        <span class="brand-mark">T</span>
-        <span class="brand-name">
-          TAXPERTIZE
-          <small>TAX · ACCOUNTS · COMPLIANCE</small>
-        </span>
+        <img src="images/taxpertize-logo.png" alt="TAXPERTIZE — Tax, Accounts, Compliance" class="brand-logo">
       </a>
 
       <button class="menu-toggle" id="menuToggle"
@@ -559,7 +555,10 @@
         <strong>TAXPERTIZE Assistant</strong>
         <small>Business & tax guide</small>
       </div>
-      <button type="button" id="chatClose" aria-label="Close chat">×</button>
+      <div class="chat-head-actions">
+        <button type="button" id="chatSound" class="chat-sound" aria-label="Mute chat sound" title="Mute sound">🔊</button>
+        <button type="button" id="chatClose" aria-label="Close chat">×</button>
+      </div>
     </div>
 
     <div class="chatbot-messages" id="chatMessages" aria-live="polite">
