@@ -75,5 +75,14 @@
     Contact: +91 80196 21852
   </footer>
 </main>
+  <script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("/app/sw.js")
+      .then(() => console.log("TAXPERTIZE App ready"))
+      .catch(error => console.error("App setup error:", error));
+  });
+}
+</script>
 </body>
 </html>
